@@ -6,3 +6,13 @@ Facultad: Ingenieria
 Carrera: ISC
 Profesor: Carlos Camacho
 Fecha de Entrega: 30-5-2016
+
+este proyecto es una aplicacion web que permite integrar
+una base de datos para la administracion de estudiantes.
+Esta aplicacion brinda la opcion de crear, modificar, borar,
+o buscar un estudiante.
+
+Lenguajes: Java, SQL, HTML, CSS
+Framework:SparkJava
+IDU:  IntelliJ IDEA (version 2016.1.2)
+Database: H2
