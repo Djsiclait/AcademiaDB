@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile: 'H2 1.4.191 (2016-01-21)'
+    testCompile group: 'junit', name: 'junit', version:
+    compile "com.sparkjava:spark-core:2.5"
+    compile "H2 1.4.191 (2016-01-21)"
 }
