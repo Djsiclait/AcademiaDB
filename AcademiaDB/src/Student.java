@@ -4,11 +4,12 @@
 public class Student {
 
     // Attributes
-    public int matricula;
-    public String name;
-    public String lastName;
-    public String telephone;
+    private int matricula;
+    private String name;
+    private String lastName;
+    private String telephone;
 
+    // Constructors
     public Student(){
 
     }
@@ -18,5 +19,26 @@ public class Student {
         this.name = name;
         this.lastName = lastName;
         this.telephone = telephone;
+    }
+
+    // Gets
+    public int getMatricula()
+    {
+        return matricula;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public String getTelephone()
+    {
+        return telephone;
     }
 }
