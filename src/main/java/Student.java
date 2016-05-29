@@ -21,19 +21,11 @@ public class Student {
         this.telephone = telephone;
     }
 
-    // GETS & SETS
+    // GETS
     // Student Matricula
     public String getMatricula()
     {
         return matricula;
-    }
-    
-    public void setMatricula(String newMatricula)
-    {
-        // TODO: Create test that checks if matricula is unique
-        
-        if(newMatricula.length() == 8)
-            this.matricula = newMatricula;
     }
 
     // Student Name
@@ -41,32 +33,17 @@ public class Student {
     {
         return name;
     }
-    
-    public void setName(String newName)
-    {
-        this.name = newName;
-    }
-    
+
     // Student Last Name
     public String getLastName()
     {
         return lastName;
     }
-    
-    public void setLastName(String newLastName)
-    {
-        this.lastName = newLastName;
-    }
-    
+
     // Student Telephone
     public String getTelephone()
     {
         return telephone;
     }
-    
-    public void setTelephone(String newTelephone)
-    {
-        if(newTelephone.length() == 10)
-            this.telephone = newTelephone;
-    }
+
 }
