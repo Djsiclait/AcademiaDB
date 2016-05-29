@@ -15,8 +15,9 @@ public class Main {
         //Class.forName("org.h2.Driver");
         //Connection conn = DriverManager.getConnection("jdbc:h2:~/Estudiantes", "sa", "");
 
-        get("/", (req, res) -> "Hello World");
-        
+        // http://localhost:4567/
+        get("/", (req, res) -> "FUCK YOUUUUUUUU!!!!");
+
         System.out.println("Ping 2!");
         //conn.close();
     }
