@@ -7,65 +7,28 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
 import freemarker.template.*;
+import freemarker.*;
 import freemarker.core.*;
-import org.eclipse.jetty.websocket.common.events.ParamList;
-
-//import spark.template.freemarker.FreeMarkerEngine;
+import spark.ModelAndView;
+import spark.template.freemarker.FreeMarkerEngine;
 
 public class Main {
 
-    private static Map<String, ArrayList> database = new HashMap<>();
-    private static Template homePage;
+    private static ArrayList<Student> students = null;
 
     public static void main(String[] args) throws Exception{
 
-        ConfigureFreeMarker();
-
-        //RunSparkEnvironment();
-        ExecuteQuery(new Student(), "");
-        Writer out = new OutputStreamWriter(System.out);
-        homePage.process(database, out);
-    }
-
-    // Freemarker Utility Functions
-    private static void ConfigureFreeMarker()
-    {
-        // Specifying the FreeMarker version used
-        freemarker.template.Configuration config = new Configuration(Configuration.VERSION_2_3_24);
-
-        try
-        {
-            // Specifying the directory where templates are stored
-            config.setDirectoryForTemplateLoading(new File("src/main/FreeMarker/templates"));
-            // Setting default encoding
-            config.setDefaultEncoding("UTF-8");
-            // setting up Exception protocols for errors
-            config.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
-
-            config.setLogTemplateExceptions(false);
-
-            // Setting the ftl files
-            homePage = config.getTemplate("index.ftl");
-
-        }
-        catch (IOException exp) {
-            System.out.println("DIR ERROR: " + exp.getMessage());
-        }
-        catch (Exception exp)
-        {
-            System.out.println("ERROR! --> " + exp.getMessage());
-        }
-
+        RunSparkEnvironment();
+        //ExecuteQuery(new Student(), "");
+        //Writer out = new OutputStreamWriter(System.out);
+        //homePage.process(database, out);
     }
 
     // H2 Database Functions
@@ -92,6 +55,7 @@ public class Main {
 
     private static void ExecuteQuery(Student stud, String query)
     {
+
         try
         {
             System.out.println("Connecting to DataBase...");
@@ -134,30 +98,42 @@ public class Main {
 
                     break;
 
-                default: // For test purposes only; NOT ACCESSIBLE to final product
+                case "list ": // search query
 
                     rs = stat.executeQuery("Select * From ESTUDIANTES");
 
-                    int count = 0;
-                    ArrayList<Student> students = new  ArrayList<>();
+                    students = new ArrayList<>();
 
                     while(rs.next())
-                    {
-                        //count++;
-                        //String formatted =  "\tMatricula: " + rs.getString("matricula") + "\n\tNombre: " + rs.getString("nombre") + "\n\tApellidos: " + rs.getString("apellidos") + "\n\tTelefono: " + rs.getString("telefono");
-                        //System.out.println("\nEstudiante #" + count + ":\n" + formatted);
                         students.add(new Student(rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono")));
-                    }
-                    database.put("Registry",students );
+
+                    break;
+                default: // specific search query
+
+                    rs = stat.executeQuery("Select * From ESTUDIANTES WHERE MATRICULA=" + query);
+
+                    students = new ArrayList<>();
+
+                    while(rs.next())
+                        students.add(new Student(rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono")));
+
                     break;
             }
 
-            System.out.println("\nClosing Database");
-            conx.close();
+            //System.out.println("\nClosing Database");
+            //conx.close();
         }
         catch (ClassNotFoundException exp)// Driver error
         {
             System.out.println("DRIVER ERROR: " + exp.getMessage());
+        }
+        catch (SQLDataException exp)
+        {
+            System.out.println("SQL DATA ERROR: " + exp.getMessage());
+        }
+        catch (SQLException exp)
+        {
+            System.out.println("SQL ERROR: " + exp.getMessage());
         }
         catch (Exception exp) // General errors
         {
@@ -169,13 +145,52 @@ public class Main {
     public static void RunSparkEnvironment()
     {
         // http://localhost:4567/
-        get("/", (req, res) -> "Hello World");
+        get("/", (req, res) -> {
+            res.status(200);
+            Map<String, Object> attributes = new HashMap<>();
 
-        // http://localhost:4567/modify
-        get("/modify", (req, res) -> "To modify");
+            ExecuteQuery(new Student(), "list");
+
+            if(!students.isEmpty())
+                attributes.put("Registry", students.toArray());
+            else
+                System.out.println("EMPTY VARIABLE");
+
+            attributes.put("message", "Registered Students");
+            attributes.put("url1", "http://localhost:4567/new");
+            attributes.put("url2", "http://localhost:4567/modify");
+
+            return new ModelAndView(attributes, "index.ftl");
+        }, new FreeMarkerEngine());
+
+        // http://localhost:4567/modify/xxxxXXXX
+        // Best to use Matricula as parameter to avoid data corruption "/"
+        get("/modify/:matricula", (req, res) -> {
+            res.status(200);
+            Map<String, Object> attributes = new HashMap<>();
+
+            ExecuteQuery(new Student(), req.params(":matricula"));
+
+            Student stud = students.remove(0);
+
+            attributes.put("message", "Student Modification");
+            attributes.put("matricula", req.params(":matricula"));
+            attributes.put("oldName", stud.getName());
+            attributes.put("oldLastName", stud.getLastName());
+            attributes.put("oldTelephone", stud.getTelephone());
+
+            return new ModelAndView(attributes, "modify.ftl");
+        }, new FreeMarkerEngine());
 
         // http://localhost:4567/new
-        get("/new", (req, res) -> "Add student here");
+        get("/new", (req, res) -> {
+            res.status(200);
+            Map<String, Object> attributes = new HashMap<>();
+
+            attributes.put("message", "Student Registration");
+
+            return new ModelAndView(attributes, "register.ftl");
+        }, new FreeMarkerEngine());
 
     }
 }
