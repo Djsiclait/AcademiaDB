@@ -4,7 +4,7 @@
 public class Student {
 
     // Attributes
-    private int matricula;
+    private String matricula;
     private String name;
     private String lastName;
     private String telephone;
@@ -14,7 +14,7 @@ public class Student {
 
     }
 
-    public Student(int matricula, String name, String lastName, String telephone){
+    public Student(String matricula, String name, String lastName, String telephone){
         this.matricula = matricula;
         this.name = name;
         this.lastName = lastName;
@@ -23,16 +23,16 @@ public class Student {
 
     // GETS & SETS
     // Student Matricula
-    public int getMatricula()
+    public String getMatricula()
     {
         return matricula;
     }
     
-    public void setMatricula(newMatricula)
+    public void setMatricula(String newMatricula)
     {
         // TODO: Create test that checks if matricula is unique
         
-        if(newMatricula.toString().length() == 8)
+        if(newMatricula.length() == 8)
             this.matricula = newMatricula;
     }
 
@@ -42,7 +42,7 @@ public class Student {
         return name;
     }
     
-    public void setName(newName)
+    public void setName(String newName)
     {
         this.name = newName;
     }
@@ -53,7 +53,7 @@ public class Student {
         return lastName;
     }
     
-    public void setLastName(newLastName)
+    public void setLastName(String newLastName)
     {
         this.lastName = newLastName;
     }
@@ -64,7 +64,7 @@ public class Student {
         return telephone;
     }
     
-    public void setTelephone(newTelephone)
+    public void setTelephone(String newTelephone)
     {
         if(newTelephone.length() == 10)
             this.telephone = newTelephone;
