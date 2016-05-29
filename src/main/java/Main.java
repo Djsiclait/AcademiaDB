@@ -11,14 +11,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
 
-        System.out.println("Ping 1!");
-        //Class.forName("org.h2.Driver");
-        //Connection conn = DriverManager.getConnection("jdbc:h2:~/Estudiantes", "sa", "");
-
         // http://localhost:4567/
         get("/", (req, res) -> "Hello World");
 
-        System.out.println("Ping 2!");
-        //conn.close();
+        // http://localhost:4567/modify
+        get("/modify", (req, res) -> "To modify");
+
+        // http://localhost:4567/new
+        get("/new", (req, res) -> "Add student here");
+
     }
 }
