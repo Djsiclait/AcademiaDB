@@ -20,7 +20,7 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
 
     // Freemarker Library
-    def freemarkerVersion = "2.3.24"
+    def freemarkerVersion = "2.3.21"
 
     compile("org.freemarker:freemarker:${freemarkerVersion}")
 }
