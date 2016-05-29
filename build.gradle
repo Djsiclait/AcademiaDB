@@ -12,10 +12,15 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    // SparkJava library
+    // SparkJava Library
     compile "com.sparkjava:spark-core:2.4"
 
-    //
+    // Slf4j Library
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+
+    // Freemarker Library
+    def freemarkerVersion = "2.3.21"
+
+    compile("org.freemarker:freemarker:${freemarkerVersion}")
 }
