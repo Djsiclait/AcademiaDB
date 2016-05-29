@@ -3,24 +3,72 @@
  */
 
 // Libraries
-import java.sql.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import freemarker.template.*;
+import freemarker.core.*;
+import org.eclipse.jetty.websocket.common.events.ParamList;
+
+//import spark.template.freemarker.FreeMarkerEngine;
 
 public class Main {
 
+    private static Map<String, ArrayList> database = new HashMap<>();
+    private static Template homePage;
+
     public static void main(String[] args) throws Exception{
 
-        // http://localhost:4567/
-        get("/", (req, res) -> "Hello World");
+        ConfigureFreeMarker();
 
-        // http://localhost:4567/modify
-        get("/modify", (req, res) -> "To modify");
-
-        // http://localhost:4567/new
-        get("/new", (req, res) -> "Add student here");
+        //RunSparkEnvironment();
+        ExecuteQuery(new Student(), "");
+        Writer out = new OutputStreamWriter(System.out);
+        homePage.process(database, out);
     }
 
+    // Freemarker Utility Functions
+    private static void ConfigureFreeMarker()
+    {
+        // Specifying the FreeMarker version used
+        freemarker.template.Configuration config = new Configuration(Configuration.VERSION_2_3_24);
+
+        try
+        {
+            // Specifying the directory where templates are stored
+            config.setDirectoryForTemplateLoading(new File("src/main/FreeMarker/templates"));
+            // Setting default encoding
+            config.setDefaultEncoding("UTF-8");
+            // setting up Exception protocols for errors
+            config.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
+
+            config.setLogTemplateExceptions(false);
+
+            // Setting the ftl files
+            homePage = config.getTemplate("index.ftl");
+
+        }
+        catch (IOException exp) {
+            System.out.println("DIR ERROR: " + exp.getMessage());
+        }
+        catch (Exception exp)
+        {
+            System.out.println("ERROR! --> " + exp.getMessage());
+        }
+
+    }
+
+    // H2 Database Functions
     private static void AddStudent(String matricula, String name, String lastName, String telephone)
     {
         Student stud = new Student(matricula, name, lastName, telephone);
@@ -91,14 +139,16 @@ public class Main {
                     rs = stat.executeQuery("Select * From ESTUDIANTES");
 
                     int count = 0;
+                    ArrayList<Student> students = new  ArrayList<>();
 
                     while(rs.next())
                     {
-                        count++;
-                        String formatted =  "\tMatricula: " + rs.getString("matricula") + "\n\tNombre: " + rs.getString("nombre") + "\n\tApellidos: " + rs.getString("apellidos") + "\n\tTelefono: " + rs.getString("telefono");
-                        System.out.println("\nEstudiante #" + count + ":\n" + formatted);
+                        //count++;
+                        //String formatted =  "\tMatricula: " + rs.getString("matricula") + "\n\tNombre: " + rs.getString("nombre") + "\n\tApellidos: " + rs.getString("apellidos") + "\n\tTelefono: " + rs.getString("telefono");
+                        //System.out.println("\nEstudiante #" + count + ":\n" + formatted);
+                        students.add(new Student(rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono")));
                     }
-
+                    database.put("Registry",students );
                     break;
             }
 
@@ -107,11 +157,25 @@ public class Main {
         }
         catch (ClassNotFoundException exp)// Driver error
         {
-            System.out.println("DRIVER ERROR: " + exp.toString());
+            System.out.println("DRIVER ERROR: " + exp.getMessage());
         }
         catch (Exception exp) // General errors
         {
-            System.out.println("ERROR! " + exp.toString());
+            System.out.println("ERROR! --> " + exp.getMessage());
         }
+    }
+
+    // Sparkjava Environment Functions
+    public static void RunSparkEnvironment()
+    {
+        // http://localhost:4567/
+        get("/", (req, res) -> "Hello World");
+
+        // http://localhost:4567/modify
+        get("/modify", (req, res) -> "To modify");
+
+        // http://localhost:4567/new
+        get("/new", (req, res) -> "Add student here");
+
     }
 }
