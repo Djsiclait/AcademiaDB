@@ -5,7 +5,7 @@
 // Libraries
 import java.sql.*;
 
-import spark.Spark.*;
+import static spark.Spark.*;
 
 public class Main {
 
@@ -15,8 +15,9 @@ public class Main {
         //Class.forName("org.h2.Driver");
         //Connection conn = DriverManager.getConnection("jdbc:h2:~/Estudiantes", "sa", "");
 
+        get("/", (req, res) -> "Hello World");
+        
         System.out.println("Ping 2!");
-
         //conn.close();
     }
 }
