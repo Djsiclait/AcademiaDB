@@ -5,14 +5,14 @@
         <link type="text/css" rel="stylesheet" href="css/index.css" />
     </head>
     <body>
-        <div id="container">
+        <div class="box" id="container">
             <!-- Header -->
-            <div id="header">
+            <div class="box" id="header">
                 <h1>${message}</h1>
             </div>
 
             <!-- Registry -->
-            <div id="registry">
+            <div class="box" id="registry">
                 <table>
                     <thead>
                         <tr>
@@ -41,7 +41,7 @@
             <br>
 
             <!-- Buttons -->
-            <div id="buttons">
+            <div class="box" id="buttons">
                 <form action="http://localhost:4567/new" method="GET">
                     <input type="submit" name="submit" value="Add New Student">
                 </form>
@@ -56,7 +56,7 @@
             </div>
 
             <!-- Footer -->
-            <div id="footer">
+            <div class="box" id="footer">
                 <p>Created by Djidjelly P. Siclait</p>
             </div>
         </div>
