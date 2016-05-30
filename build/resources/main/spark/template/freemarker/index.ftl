@@ -11,6 +11,8 @@
                 <h1>${message}</h1>
             </div>
 
+            <br>
+
             <!-- Registry -->
             <div class="box" id="registry">
                 <table>
@@ -54,6 +56,8 @@
                     <input type="submit" name="submit" value="Delete Student">
                 </form>
             </div>
+
+            <br>
 
             <!-- Footer -->
             <div class="box" id="footer">

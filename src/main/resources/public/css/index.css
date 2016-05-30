@@ -2,14 +2,18 @@ body {
     background-color: lightblue;
 }
 
+form {
+    display: inline-block;
+}
+
 table {
-    margin: auto;
-    background-color: dodgerblue;
+    width: 100%;
 }
 
 table tr {
     margin: auto;
     border: 1px solid darkblue;
+    height: 10px;
 }
 
 table th {
@@ -20,6 +24,18 @@ table th {
 table td {
     margin: auto;
     border: 1px solid darkblue;
+}
+
+h1 {
+    margin: auto;
+}
+
+h3 {
+    margin: auto;
+}
+
+p {
+    margin: auto;
 }
 
 .box {
@@ -36,5 +52,19 @@ table td {
 }
 
 #header {
+    background-color: darkblue;
+    color: white;
+}
 
+#registry {
+    margin: auto;
+    background-color: dodgerblue;
+    height: 300px;
+    overflow: auto;
+}
+
+#footer {
+    background-color: darkblue;
+    color: white;
+    margin-bottom: 0px;
 }
