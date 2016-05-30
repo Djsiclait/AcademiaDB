@@ -26,6 +26,12 @@ table td {
     border: 1px solid darkblue;
 }
 
+tr.selected td
+{
+    background-color: #d1db3e;
+    color:#000;
+}
+
 h1 {
     margin: auto;
 }

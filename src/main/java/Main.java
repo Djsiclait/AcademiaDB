@@ -3,10 +3,6 @@
  */
 
 // Libraries
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,11 +10,6 @@ import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
-
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import freemarker.template.*;
-import freemarker.*;
-import freemarker.core.*;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -32,9 +23,6 @@ public class Main {
         Spark.staticFileLocation("/public");
 
         RunSparkEnvironment();
-        //ExecuteQuery(new Student(), "");
-        //Writer out = new OutputStreamWriter(System.out);
-        //homePage.process(database, out);
     }
 
     // H2 Database Functions
@@ -61,7 +49,6 @@ public class Main {
 
     private static void ExecuteQuery(Student stud, String query)
     {
-
         try
         {
             System.out.println("Connecting to DataBase...");
@@ -82,7 +69,6 @@ public class Main {
                 case "insert":
 
                     querycmd = "INSERT INTO ESTUDIANTES (MATRICULA, NOMBRE, APELLIDOS, TELEFONO) VALUES ('" + stud.getMatricula() + "', '" + stud.getName() + "', '" + stud.getLastName() + "', '" + stud.getTelephone()+ "')";
-                    System.out.println(querycmd+"****");
 
                     stat.execute(querycmd);
 
@@ -166,7 +152,6 @@ public class Main {
 
         post("/delete", (req, res) -> {
             DeleteStudent(req.queryParams("matricula"));
-            //DeleteStudent("20141807");
 
             res.redirect("/");
 
@@ -180,13 +165,11 @@ public class Main {
             Map<String, Object> attributes = new HashMap<>();
 
             ExecuteQuery(new Student(), req.queryParams("matricula"));
-            //ExecuteQuery(new Student(), "20141807");
 
             Student stud = students.remove(0);
 
             attributes.put("message", "Student Modification");
-            //attributes.put("matricula", req.queryParams("matricula"));
-            attributes.put("matricula", "20112319");
+            attributes.put("matricula", req.queryParams("matricula"));
             attributes.put("oldName", stud.getName());
             attributes.put("oldLastName", stud.getLastName());
             attributes.put("oldTelephone", stud.getTelephone());
@@ -232,7 +215,6 @@ public class Main {
                         req.queryParams("name"),
                         req.queryParams("last_name"),
                         req.queryParams("telephone"));
-
 
                 res.redirect("/");
             }

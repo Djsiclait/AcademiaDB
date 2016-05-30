@@ -47,11 +47,14 @@
                 <form action="http://localhost:4567/new" method="GET">
                     <input type="submit" name="submit" value="Add New Student">
                 </form>
+                <br>
                 <form action="http://localhost:4567/modify" method="GET">
+                    Modify: <input type="text" name="matricula">
                     <input type="submit" name="submit" value="Modify Student">
                 </form>
-
+                <br>
                 <form action="http://localhost:4567/delete" method="POST">
+                    Delete: <input type="text" name="matricula">
                     <input type="submit" name="submit" value="Delete Student">
                 </form>
             </div>
