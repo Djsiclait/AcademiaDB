@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
+
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import freemarker.template.*;
 import freemarker.*;
 import freemarker.core.*;
@@ -75,8 +78,8 @@ public class Main {
             {
                 case "insert":
 
-                    querycmd = "INSERT INTO ESTUDIANTES " +
-                            "VALUES(" + stud.getMatricula() + ", " + stud.getName() + ", " + stud.getLastName() + ", " + stud.getTelephone() + ")";
+                    querycmd = "INSERT INTO ESTUDIANTES (MATRICULA, NOMBRE, APELLIDOS, TELEFONO) VALUES ('" + stud.getMatricula() + "', '" + stud.getName() + "', '" + stud.getLastName() + "', '" + stud.getTelephone()+ "')";
+                    System.out.println(querycmd+"****");
 
                     stat.execute(querycmd);
 
@@ -84,7 +87,7 @@ public class Main {
 
                 case "delete":
 
-                    querycmd = "DELETE FROM ESTUDIANTES WHERE MATRICULA=" + stud.getMatricula();
+                    querycmd = "DELETE FROM ESTUDIANTES WHERE MATRICULA='" + stud.getMatricula() + "'";
 
                     stat.execute(querycmd);
 
@@ -92,13 +95,13 @@ public class Main {
 
                 case "modify":
 
-                    querycmd = "UPDATE ESTUDIANTES SET NOMBRE=" + stud.getName() + " ,APELLIDOS=" + stud.getLastName() + " ,TELEFONO="  + stud.getTelephone() + " WHERE MATRICULA=" + stud.getMatricula();
+                    querycmd = "UPDATE ESTUDIANTES SET NOMBRE='" + stud.getName() + "' ,APELLIDOS='" + stud.getLastName() + "' ,TELEFONO='"  + stud.getTelephone() + "' WHERE MATRICULA='" + stud.getMatricula() + "'";
 
                     stat.execute(querycmd);
 
                     break;
 
-                case "list ": // search query
+                case "list": // search query
 
                     rs = stat.executeQuery("Select * From ESTUDIANTES");
 
@@ -110,7 +113,7 @@ public class Main {
                     break;
                 default: // specific search query
 
-                    rs = stat.executeQuery("Select * From ESTUDIANTES WHERE MATRICULA=" + query);
+                    rs = stat.executeQuery("Select * From ESTUDIANTES WHERE MATRICULA='" + query + "'");
 
                     students = new ArrayList<>();
 
@@ -119,9 +122,6 @@ public class Main {
 
                     break;
             }
-
-            //System.out.println("\nClosing Database");
-            //conx.close();
         }
         catch (ClassNotFoundException exp)// Driver error
         {
@@ -157,30 +157,51 @@ public class Main {
                 System.out.println("EMPTY VARIABLE");
 
             attributes.put("message", "Registered Students");
-            attributes.put("url1", "http://localhost:4567/new");
-            attributes.put("url2", "http://localhost:4567/modify");
 
             return new ModelAndView(attributes, "index.ftl");
         }, new FreeMarkerEngine());
 
+        post("/delete", (req, res) -> {
+            DeleteStudent(req.queryParams("matricula"));
+            //DeleteStudent("20141807");
+
+            res.redirect("/");
+
+            return "You have successfully deleted a student";
+        });
+
         // http://localhost:4567/modify/xxxxXXXX
         // Best to use Matricula as parameter to avoid data corruption "/"
-        get("/modify/:matricula", (req, res) -> {
+        get("/modify", (req, res) -> {
             res.status(200);
             Map<String, Object> attributes = new HashMap<>();
 
-            ExecuteQuery(new Student(), req.params(":matricula"));
+            ExecuteQuery(new Student(), req.queryParams("matricula"));
+            //ExecuteQuery(new Student(), "20141807");
 
             Student stud = students.remove(0);
 
             attributes.put("message", "Student Modification");
-            attributes.put("matricula", req.params(":matricula"));
+            attributes.put("matricula", req.queryParams("matricula"));
+            //attributes.put("matricula", "20141807");
             attributes.put("oldName", stud.getName());
             attributes.put("oldLastName", stud.getLastName());
             attributes.put("oldTelephone", stud.getTelephone());
 
             return new ModelAndView(attributes, "modify.ftl");
         }, new FreeMarkerEngine());
+
+        // http://localhost:4567/modify/xxxxXXXX
+        post("/modify", (req, res) -> {
+            ModifyStudent(req.queryParams("matricula"),
+                    req.queryParams("new_name"),
+                    req.queryParams("new_last_name"),
+                    req.queryParams("new_telephone"));
+
+            res.redirect("/");
+
+            return "You have successfully modify a student";
+        });
 
         // http://localhost:4567/new
         get("/new", (req, res) -> {
@@ -191,6 +212,18 @@ public class Main {
 
             return new ModelAndView(attributes, "register.ftl");
         }, new FreeMarkerEngine());
+
+        //http://localhost:4567/new
+        post("/new", (req, res) -> {
+            AddStudent(req.queryParams("matricula"),
+                    req.queryParams("name"),
+                    req.queryParams("last_name"),
+                    req.queryParams("telephone"));
+
+            res.redirect("/");
+
+            return "You have just added a student";
+        });
 
     }
 }
