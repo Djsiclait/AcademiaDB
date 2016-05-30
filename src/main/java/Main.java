@@ -20,6 +20,7 @@ import freemarker.template.*;
 import freemarker.*;
 import freemarker.core.*;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 public class Main {
@@ -27,6 +28,8 @@ public class Main {
     private static ArrayList<Student> students = null;
 
     public static void main(String[] args) throws Exception{
+
+        Spark.staticFileLocation("/public");
 
         RunSparkEnvironment();
         //ExecuteQuery(new Student(), "");

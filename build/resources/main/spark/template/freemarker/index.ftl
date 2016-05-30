@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>AcademiaDB-HOME</title>
+        <link type="text/css" rel="stylesheet" href="css/index.css" />
     </head>
     <body>
         <h1>${message}</h1>
