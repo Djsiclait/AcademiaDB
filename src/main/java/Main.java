@@ -218,12 +218,19 @@ public class Main {
 
         //http://localhost:4567/new
         post("/new", (req, res) -> {
-            AddStudent(req.queryParams("matricula"),
-                    req.queryParams("name"),
-                    req.queryParams("last_name"),
-                    req.queryParams("telephone"));
 
-            res.redirect("/");
+            if(req.queryParams("matricula") == "" || req.queryParams("name") == "" || req.queryParams("last_name") == "" || req.queryParams("telephone") == "")
+                res.redirect("/");
+            else
+            {
+                AddStudent(req.queryParams("matricula"),
+                        req.queryParams("name"),
+                        req.queryParams("last_name"),
+                        req.queryParams("telephone"));
+
+
+                res.redirect("/");
+            }
 
             return "You have just added a student";
         });
