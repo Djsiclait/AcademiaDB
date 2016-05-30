@@ -185,8 +185,8 @@ public class Main {
             Student stud = students.remove(0);
 
             attributes.put("message", "Student Modification");
-            attributes.put("matricula", req.queryParams("matricula"));
-            //attributes.put("matricula", "20141807");
+            //attributes.put("matricula", req.queryParams("matricula"));
+            attributes.put("matricula", "20112319");
             attributes.put("oldName", stud.getName());
             attributes.put("oldLastName", stud.getLastName());
             attributes.put("oldTelephone", stud.getTelephone());
@@ -196,12 +196,17 @@ public class Main {
 
         // http://localhost:4567/modify/xxxxXXXX
         post("/modify", (req, res) -> {
-            ModifyStudent(req.queryParams("matricula"),
-                    req.queryParams("new_name"),
-                    req.queryParams("new_last_name"),
-                    req.queryParams("new_telephone"));
+            if(req.queryParams("matricula") == "" || req.queryParams("new_name") == "" || req.queryParams("new_last_name") == "" || req.queryParams("new_telephone") == "")
+                res.redirect("/");
+            else
+            {
+                ModifyStudent(req.queryParams("matricula"),
+                        req.queryParams("new_name"),
+                        req.queryParams("new_last_name"),
+                        req.queryParams("new_telephone"));
 
-            res.redirect("/");
+                res.redirect("/");
+            }
 
             return "You have successfully modify a student";
         });

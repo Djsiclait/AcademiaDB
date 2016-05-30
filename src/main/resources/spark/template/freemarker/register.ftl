@@ -38,7 +38,7 @@
                         <input type="submit" name="submit" value="Submit">
                     </fieldset>
                 </form>
-                <br>
+                <br><br>
                 <form action="http://localhost:4567" method="GET">
                     <!-- Cancel -->
                     <input type="submit" value="Home">
