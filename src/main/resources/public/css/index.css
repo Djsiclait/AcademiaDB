@@ -1,0 +1,70 @@
+body {
+    background-color: lightblue;
+}
+
+form {
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+}
+
+table tr {
+    margin: auto;
+    border: 1px solid darkblue;
+    height: 10px;
+}
+
+table th {
+    margin: auto;
+    border: 1px solid darkblue;
+}
+
+table td {
+    margin: auto;
+    border: 1px solid darkblue;
+}
+
+h1 {
+    margin: auto;
+}
+
+h3 {
+    margin: auto;
+}
+
+p {
+    margin: auto;
+}
+
+.box {
+    margin: auto;
+
+    width: 500px;
+
+    text-align: center;
+}
+
+#container {
+    border: 1px solid darkblue;
+    border-radius: 5px;
+}
+
+#header {
+    background-color: darkblue;
+    color: white;
+}
+
+#registry {
+    margin: auto;
+    background-color: dodgerblue;
+    height: 300px;
+    overflow: auto;
+}
+
+#footer {
+    background-color: darkblue;
+    color: white;
+    margin-bottom: 0px;
+}
