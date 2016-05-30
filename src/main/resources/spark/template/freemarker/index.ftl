@@ -31,11 +31,17 @@
         </table>
 
         <div>
-            <p><a href=${url1}>Add Student</a></p>
+            <form action="http://localhost:4567/new" method="GET">
+                <input type="submit" name="submit" value="Add New Student">
+            </form>
 
-            <p><a href=${url2}>Modify Student</a></p>
+            <form action="http://localhost:4567/modify" method="GET">
+                <input type="submit" name="submit" value="Modify Student">
+            </form>
 
-            <p>Remove Student</p>
+            <form action="http://localhost:4567/delete" method="POST">
+                <input type="submit" name="submit" value="Delete Student">
+            </form>
         </div>
 
         <p>Created by Djidjelly P. Siclait</p>
