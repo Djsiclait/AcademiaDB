@@ -10,13 +10,21 @@ import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.setPort;
+
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
+import java.lang.Integer;
 
 public class Main {
-    
-    ProcessBuilder process = new ProcessBuilder();
+
+    private static ArrayList<Student> students = null;
+
+    public static void main(String[] args) throws Exception{
+
+
+        ProcessBuilder process = new ProcessBuilder();
         Integer port;
         if (process.environment().get("PORT") != null) {
             port = Integer.parseInt(process.environment().get("PORT"));
@@ -25,10 +33,6 @@ public class Main {
         }
 
         setPort(port);
-
-    private static ArrayList<Student> students = null;
-
-    public static void main(String[] args) throws Exception{
 
         Spark.staticFileLocation("/public");
 
