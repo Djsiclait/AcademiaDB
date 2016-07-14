@@ -2,6 +2,87 @@
 <html>
     <head>
         <title>AcademiaDB-HOME</title>
+
+        <style>
+            body {
+                background-color: lightblue;
+            }
+
+            form {
+                display: inline-block;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            table tr {
+                margin: auto;
+                border: 1px solid darkblue;
+                height: 10px;
+            }
+
+            table th {
+                margin: auto;
+                border: 1px solid darkblue;
+            }
+
+            table td {
+                margin: auto;
+                border: 1px solid darkblue;
+            }
+
+            tr.selected td
+            {
+                background-color: #d1db3e;
+                color:#000;
+            }
+
+            h1 {
+                margin: auto;
+            }
+
+            h3 {
+                margin: auto;
+            }
+
+            p {
+                margin: auto;
+            }
+
+            .box {
+                margin: auto;
+
+                width: 500px;
+
+                text-align: center;
+            }
+
+            #container {
+                border: 1px solid darkblue;
+                border-radius: 5px;
+            }
+
+            #header {
+                background-color: darkblue;
+                color: white;
+            }
+
+            #registry {
+                margin: auto;
+                background-color: dodgerblue;
+                height: 300px;
+                overflow: auto;
+            }
+
+            #footer {
+                background-color: darkblue;
+                color: white;
+                margin-bottom: 0px;
+            }
+
+        </style>
+
         <link type="text/css" rel="stylesheet" href="css/index.css" />
     </head>
     <body>
@@ -44,16 +125,16 @@
 
             <!-- Buttons -->
             <div class="box" id="buttons">
-                <form action="http://localhost:4567/new" method="GET">
+                <form action="/new" method="GET">
                     <input type="submit" name="submit" value="Add New Student">
                 </form>
                 <br>
-                <form action="http://localhost:4567/modify" method="GET">
+                <form action="/modify" method="GET">
                     Modify: <input type="text" name="matricula">
                     <input type="submit" name="submit" value="Modify Student">
                 </form>
                 <br>
-                <form action="http://localhost:4567/delete" method="POST">
+                <form action="/delete" method="POST">
                     Delete: <input type="text" name="matricula">
                     <input type="submit" name="submit" value="Delete Student">
                 </form>

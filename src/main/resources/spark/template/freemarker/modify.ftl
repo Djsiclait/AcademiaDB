@@ -2,6 +2,87 @@
 <html>
     <head>
         <title>Register Student</title>
+
+        <style>
+            body {
+                background-color: lightblue;
+            }
+
+            form {
+                display: inline-block;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            table tr {
+                margin: auto;
+                border: 1px solid darkblue;
+                height: 10px;
+            }
+
+            table th {
+                margin: auto;
+                border: 1px solid darkblue;
+            }
+
+            table td {
+                margin: auto;
+                border: 1px solid darkblue;
+            }
+
+            tr.selected td
+            {
+                background-color: #d1db3e;
+                color:#000;
+            }
+
+            h1 {
+                margin: auto;
+            }
+
+            h3 {
+                margin: auto;
+            }
+
+            p {
+                margin: auto;
+            }
+
+            .box {
+                margin: auto;
+
+                width: 500px;
+
+                text-align: center;
+            }
+
+            #container {
+                border: 1px solid darkblue;
+                border-radius: 5px;
+            }
+
+            #header {
+                background-color: darkblue;
+                color: white;
+            }
+
+            #registry {
+                margin: auto;
+                background-color: dodgerblue;
+                height: 300px;
+                overflow: auto;
+            }
+
+            #footer {
+                background-color: darkblue;
+                color: white;
+                margin-bottom: 0px;
+            }
+
+        </style>
+
         <link type="text/css" rel="stylesheet" href="css/index.css" />
     </head>
     <body>
@@ -15,7 +96,7 @@
 
             <!-- Registry -->
             <div class="box" id="registry">
-                <form action="http://localhost:4567/modify" method="POST">
+                <form action="/modify" method="POST">
                     <fieldset style="width: 300px">
                         <legend>Modification Form</legend>
                         <!-- Matricula -->
@@ -39,7 +120,7 @@
                     </fieldset>
                 </form>
                 <br><br>
-                <form action="http://localhost:4567" method="GET">
+                <form action="/" method="GET">
                     <!-- Cancel -->
                     <input type="submit" name="submit" value="Home">
                 </form>
