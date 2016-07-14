@@ -30,6 +30,9 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
 
+    // H2 Data Base
+    compile group: 'com.h2database', name: 'h2', version: '1.4.192'
+
     compile group: 'com.sparkjava', name: 'spark-template-freemarker', version: '2.0.0'
 }
 

@@ -63,7 +63,7 @@
 
             <!-- Footer -->
             <div class="box" id="footer">
-                <p>Created by Djidjelly P. Siclait</p>
+                <p>Copyrighted &copy; by Djidjelly P. Siclait</p>
             </div>
         </div>
     </body>

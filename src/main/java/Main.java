@@ -12,17 +12,18 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.setPort;
 
+import freemarker.template.utility.Execute;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 import java.lang.Integer;
+import org.h2.tools.Server;
 
 public class Main {
 
     private static ArrayList<Student> students = null;
 
     public static void main(String[] args) throws Exception{
-
 
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
@@ -34,8 +35,15 @@ public class Main {
 
         setPort(port);
 
+        Server server = null;
+        try {
+            server = Server.createTcpServer("-tcpAllowOthers").start();
+        } catch (SQLException e) {
+            System.out.println("FAILED TO START SERVER, CLOSE H2 IF YOU HAVE IT OPENED");
+            e.printStackTrace();
+        }
         Spark.staticFileLocation("/public");
-
+        ExecuteQuery(null, "Boot");
         RunSparkEnvironment();
     }
 
@@ -80,6 +88,17 @@ public class Main {
 
             switch (query)
             {
+                case "Boot":
+
+                    rs = stat.executeQuery("Select * From ESTUDIANTES");
+
+                    if(rs.getFetchSize() == 0) {
+                        System.out.println("\n\nCreating tables...");
+                        stat.execute("INSERT INTO ESTUDIANTES (MATRICULA, NOMBRE, APELLIDOS, TELEFONO) VALUES (20112319, 'Djidjelly', 'Siclait', '8003321000');");
+                    }
+                    else
+                        System.out.println("Database already configured!");
+                    break;
                 case "insert":
 
                     querycmd = "INSERT INTO ESTUDIANTES (MATRICULA, NOMBRE, APELLIDOS, TELEFONO) VALUES ('" + stud.getMatricula() + "', '" + stud.getName() + "', '" + stud.getLastName() + "', '" + stud.getTelephone()+ "')";
