@@ -86,7 +86,7 @@ public class Main {
             ResultSet rs;
             String querycmd;
 
-            //stat.execute("CREATE TABLE ESTUDIANTES (MATRICULA INT, NOMBRE VARCHAR(80), APELLIDOS VARCHAR(80), TELEFONO VARCHAR(10));");
+            stat.execute("CREATE TABLE ESTUDIANTES (MATRICULA INT, NOMBRE VARCHAR(80), APELLIDOS VARCHAR(80), TELEFONO VARCHAR(10));");
 
             switch (query)
             {
