@@ -15,6 +15,16 @@ import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 public class Main {
+    
+    ProcessBuilder process = new ProcessBuilder();
+        Integer port;
+        if (process.environment().get("PORT") != null) {
+            port = Integer.parseInt(process.environment().get("PORT"));
+        } else {
+            port = 4567;
+        }
+
+        setPort(port);
 
     private static ArrayList<Student> students = null;
 
