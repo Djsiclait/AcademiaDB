@@ -44,7 +44,7 @@ public class Main {
         }
         Spark.staticFileLocation("/public");
         ExecuteQuery(null, "Boot");
-        RunSparkEnvironment();
+        //RunSparkEnvironment();
     }
 
     // H2 Database Functions
