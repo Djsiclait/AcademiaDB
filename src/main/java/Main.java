@@ -91,7 +91,14 @@ public class Main {
             switch (query)
             {
                 case "Boot":
-                    stat.execute("CREATE TABLE ESTUDIANTES (MATRICULA INT, NOMBRE VARCHAR(80), APELLIDOS VARCHAR(80), TELEFONO VARCHAR(10));");
+                    rs = stat.executeQuery("Select * From ESTUDIANTES");
+
+                    if(rs.getFetchSize() == 0) {
+                        System.out.println("\n\nCreating tables...");
+                        stat.execute("INSERT INTO ESTUDIANTES (MATRICULA, NOMBRE, APELLIDOS, TELEFONO) VALUES (20112319, 'Djidjelly', 'Siclait', '8003321000');");
+                    }
+                    else
+                        System.out.println("Database already configured!");
 
                     break;
                 case "insert":
