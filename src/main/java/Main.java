@@ -78,7 +78,7 @@ public class Main {
             // H2 automatically creates new databases is they don't exist
             // ;IFEXIST=TRUE is used to specify the application will only
             // use a pre-existing database
-            Connection conx = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/AcademiaDB;", "sa", "");
+            Connection conx = DriverManager.getConnection("jdbc:h2:~/AcademiaDB;", "sa", "");
             System.out.println("\nSuccessfully Connected!");
 
             // Preparing to execute query
